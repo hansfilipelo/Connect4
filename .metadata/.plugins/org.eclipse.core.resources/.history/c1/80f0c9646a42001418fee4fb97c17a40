@@ -1,0 +1,97 @@
+package connect4;
+
+import java.awt.Image;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
+import java.net.URL;
+import java.util.List;
+import javax.swing.ImageIcon;
+
+//import java.awt.Image;
+//import java.util.ArrayList;
+
+
+
+public class ClickListener implements MouseListener, MouseMotionListener {
+	private List<Square> squares;
+	private ConnectGui connectGui;
+	
+	private Square clickSquare;
+	
+	public ClickListener(List<Square> squares, ConnectGui connectGui) {	//contructor
+		this.squares = squares;
+		this.connectGui = connectGui;
+	}
+	
+	@Override
+	public void mousePressed(MouseEvent evt) {
+		int x = evt.getPoint().x;
+		int y = evt.getPoint().y;
+		
+		// find out which piece should change type
+		// we check the list from top to buttom
+		// (therefore we itereate in reverse order)
+		//
+		for (int i = this.squares.size()-1; i >= 0; i--) {
+			Square square = this.squares.get(i);
+			int k = 0;
+			for(int j = 1; j < 7; j++){
+				y = 50+70*j;
+				if(mouseOverSquare(square,x,y) && square.getType() == 0){
+					this.clickSquare = square;
+					break;
+				}
+			}
+		}
+		
+		if(this.clickSquare != null){
+			//this.clickSquare.changeType();
+			this.squares.remove( this.clickSquare );
+			String filename = "";
+			if(this.connectGui.getGameState() == 1){
+				filename += "R";
+			}
+			else{
+				filename += "B";
+			}
+			filename += ".png";
+			int type = 2;
+			
+			URL urlPieceImg = getClass().getResource("/images/" + filename);
+			Image img = new ImageIcon(urlPieceImg).getImage();
+			
+			Square square = new Square(img,this.clickSquare.getX(),this.clickSquare.getY(),type);
+			this.squares.add(square);
+			this.connectGui.repaint();
+			this.connectGui.changeGameState();
+		}
+	}
+	
+	private boolean mouseOverSquare(Square square, int x, int y) { //checks if click is inside square
+		return square.getX() <= x 
+			&& square.getX()+square.getWidth() >= x
+			&& square.getY() <= y
+			&& square.getY()+square.getHeight() >= y;
+	}
+	
+	@Override
+	public void mouseReleased(MouseEvent arg0) {
+		this.clickSquare = null;
+	}
+
+	@Override
+	public void mouseDragged(MouseEvent evt) {}
+
+	@Override
+	public void mouseClicked(MouseEvent arg0) {}
+
+	@Override
+	public void mouseEntered(MouseEvent arg0) {}
+
+	@Override
+	public void mouseExited(MouseEvent arg0) {}
+	
+	@Override
+	public void mouseMoved(MouseEvent arg0) {}
+}

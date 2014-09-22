@@ -16,8 +16,8 @@ public class ConnectGui extends JPanel {
 	private static final int TYPE_RED = 1;
 	private static final int TYPE_BLACK = 2;
 	private static final int TYPE_EMPTY = 0;
-	private static final int BOARD_START_X = 51;
-	private static final int BOARD_START_Y = 51;
+	private static final int BOARD_START_X = 50;
+	private static final int BOARD_START_Y = 50;
 	private static final int TILE_OFFSET_X = 60;
 	private static final int TILE_OFFSET_Y = 60;
 	
