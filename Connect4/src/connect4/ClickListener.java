@@ -33,7 +33,7 @@ public class ClickListener implements MouseListener, MouseMotionListener {
 		// we check the list from top to buttom
 		// (therefore we itereate in reverse order)
 		//
-		for (int i = this.squares.size()-1; i >= 0; i--) {
+		for (int i = 0; i <= this.squares.size()-1; i++) {
 			Square square = this.squares.get(i);
 			for(int j = 1; j < 7; j++){
 				y = 50+60*j;
